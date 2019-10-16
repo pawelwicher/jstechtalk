@@ -64,7 +64,7 @@ In ECMAScript 2015, let and const are hoisted but not initialized. Referencing t
 
   public data = [
 { 
-title: 'Javascript',
+title: '1.1 Javascript',
 content: `
 function greet() {
   return 'Hello World';
@@ -87,7 +87,7 @@ function sum(...a) {
 },
 
 { 
-title: 'Dlaczego rozmawiamy o Javascript ?',
+title: '1.2 Dlaczego rozmawiamy o Javascript ?',
 content: `
 - bo jest popularny
 
@@ -100,7 +100,7 @@ content: `
 },
 
 { 
-title: 'Popularność języka',
+title: '1.3 Popularność języka',
 content: `
 - https://www.tiobe.com/tiobe-index//?201201
 
@@ -113,7 +113,7 @@ content: `
 },
 
 { 
-  title: 'Javascript a ECMAScript',
+  title: '1.4 Javascript a ECMAScript',
   content: `
 - https://en.wikipedia.org/wiki/JavaScript
 
@@ -124,13 +124,20 @@ content: `
 },
 
 { 
-  title: 'Cechy języka',
+  title: '1.5 Cechy języka',
   content: `
 - wieloparadygmatowy (imperatywny, obiektowy, funkcyjny)
 
 - dynamicznie typowany (tak samo jak Python)
 
 - kompilowany (JIT, V8 engine)
+`
+},
+
+{ 
+  title: '1.6 Ćwiczenie',
+  content: `
+- funkcja greet
 `
 },
 
