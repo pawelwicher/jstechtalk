@@ -1,3 +1,3 @@
-export function projectEulerNumberOne() {
+export function projectEulerNumberOne(n) {
   return null;
 }
