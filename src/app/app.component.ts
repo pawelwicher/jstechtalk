@@ -14,10 +14,12 @@ export class AppComponent {
     private contentService: ContentService) { }
 
     public prev() {
-      this.router.navigate(['item', this.contentService.id > 0 ? --this.contentService.id : this.contentService.id])
+      this.router.navigate(
+        ['item', this.contentService.id > 0 ? --this.contentService.id : this.contentService.id]);
     }
 
     public next() {
-      this.router.navigate(['item', this.contentService.id < this.contentService.data.length - 1 ? ++this.contentService.id : this.contentService.id])
+      this.router.navigate(
+        ['item', this.contentService.id < this.contentService.data.length - 1 ? ++this.contentService.id : this.contentService.id]);
     }
 }
