@@ -482,7 +482,8 @@ let { foo: x } = { o: 123, foo: 42 };
 - operatory: ==, ===, !=, !==, >, <, >=, <=
 
 - The Abstract Equality Comparison Algorithm
-http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3
+https://www.ecma-international.org/ecma-262/10.0/index.html#sec-abstract-equality-comparison
+https://www.ecma-international.org/ecma-262/10.0/index.html#sec-abstract-relational-comparison
 `
 },
 
@@ -739,15 +740,15 @@ obj[Symbol.toPrimitive] = function(hint) {
 {
   title: '3.8 Konwersje typów prostych',
   content: `
-- wyczerpujący opis temtu znajdziemy w specyfikacji języka http://www.ecma-international.org/ecma-262/5.1/
+- wyczerpujący opis tematu znajdziemy w specyfikacji języka https://www.ecma-international.org/ecma-262/10.0/index.html
 
-- operator + http://www.ecma-international.org/ecma-262/5.1/#sec-11.6.1
+- operator + https://www.ecma-international.org/ecma-262/10.0/index.html#sec-addition-operator-plus
 2 + '2' // '22'
 2 - '2' // 0
 '1' + true // '1true'
 '1' - true // 0
 
-- równość nieścisła (loose equality) == http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3
+- równość nieścisła (loose equality) == https://www.ecma-international.org/ecma-262/10.0/index.html#sec-abstract-equality-comparison
 '1' == 1 // true
 [1,2,3] =='1,2,3' // true
 0 == false // true
