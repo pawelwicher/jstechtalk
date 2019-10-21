@@ -161,14 +161,15 @@ const c = 3;
 var f = 123, g = 567;
 let p;
 let q;
+let [x,y] = [1,2];
 
+console.log(x);
+var x = 3; // zasięg funkcji lub globalny
 // undefined
-// console.log(x);
-// let x = 3; // zasięg bloku
 
+console.log(x);
+let x = 3; // zasięg bloku
 // ReferenceError
-// console.log(x);
-// var x = 3; // zasięg funkcji lub globalny
 `
 },
 
@@ -179,7 +180,7 @@ let q;
 
 - funkcje mogą przyjmować funkcje jako parametry, mogą też je zwracać
 
-- paradygmat obiektowy w JS opiera się na funkcjach (więcej w cz. 5)
+- paradygmat obiektowy w JS opiera się na funkcjach (więcej w cz. 3)
 `
 },
 
@@ -295,8 +296,8 @@ function greet(lang) {
   let s;
   switch (lang) {
     case 'pl':
-    s = 'czesc';
-    break;
+      s = 'czesc';
+      break;
 
     case 'fr':
       s = 'bonjour';
@@ -394,7 +395,8 @@ for (const prop in obj) {
   content: `
 const arr = ['hello', 'world'];
 
-for (const val of arr) { // iteruje po obiektach implementujących protokół iteracji
+// iteruje po obiektach implementujących protokół iteracji (posiadajcych properte [Symbol.iterator])
+for (const val of arr) {
   console.log(val);
 }
 `
@@ -539,7 +541,9 @@ if ('foo' in obj) {
 
 - typeof (cz. 3)
 
-- instanceof (cz. 4)
+- instanceof (cz. 3)
+
+- new (konstruktory, oop - cz. 3)
 `
 },
 
@@ -562,7 +566,7 @@ if ('foo' in obj) {
 {
   title: '3.1 Typy wbudowane',
   content: `
-- typy proste (porównywane i przekazywane przez wartość)
+- typy proste (porównywane i przekazywane przez wartość), typ sprawdamy operatorem typeof
 
 - obiekty (porównywane i przekazywane przez referencje)
 
@@ -606,7 +610,7 @@ https://exploringjs.com/impatient-js/ch_values.html#whats-a-type
 
 - typ liczbowy tworzymy za pomocą funkcji Number lub literałów liczbowych
 
-let a = Number(1);
+let x = Number(1);
 
 // Binary (base 2)
 x = 0b11;
@@ -628,12 +632,14 @@ x = 3e-2; // 0.3
 Math.sqrt(-1) //NaN
 1 / 0 // Infinity
 
-- przydatne funkcje: isNaN, toString(), parseInt, Number.isFinite, Number.isInteger, Number.prototype.toFixed
-
-let x = 255
+x = 255
 x.toString(16) // "ff"
 
-- inne funkcje liczbowe - globalny obiekt Math (Math.floor, Math.ceil, Math.round, Math.trunc)
+- przydatne funkcje i property: isNaN, toString(), parseInt,
+  Number.isFinite, Number.isInteger, Number.prototype.toFixed,
+  Number.MAX_VALUE, Number.MIN_VALUE
+
+- inne funkcje liczbowe - globalny obiekt Math (Math.floor, Math.ceil, Math.round, Math.trunc
 
 - BigInt https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
 `
@@ -720,6 +726,13 @@ Symbol.hasInstance
 Symbol.isConcatSpreadable
 Symbol.iterator
 Symbol.toPrimitive
+
+- Symbol.toPrimitive, obsługa konwersji na własnych obiektach
+
+obj[Symbol.toPrimitive] = function(hint) {
+  // must return a primitive value
+  // hint = one of "string", "number", "default"
+};
 `
 },
 
@@ -734,7 +747,7 @@ Symbol.toPrimitive
 '1' + true // '1true'
 '1' - true // 0
 
-- równość nieścisła (loose equality)
+- równość nieścisła (loose equality) == http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3
 '1' == 1 // true
 [1,2,3] =='1,2,3' // true
 0 == false // true
@@ -775,11 +788,20 @@ if (Number(x) === 123) ···
 - literał obiektu
 
 let obj = {}; // lub Object.create(null)
+let id = 123;
 obj = {
+  id, // shorthand
   name: 'Bob',
   age: 35,
-  sayHi() {
+  get fullName() { // getter
+    return 'Mr. ' + this.name;
+  },
+  ['data']: [1,2,3],
+  sayHi: function() {
     return 'Hi, i am ' + this.name;
+  },
+  sayGoodbye() { // shorthand
+    return 'Goodbye';
   }
 };
 
@@ -803,11 +825,32 @@ function Person(name) {
 }
 
 let p = new Person('Bob');
+
+- przydatne property: Function.name, Function.length
 `
 },
 
 {
-  title: '3.12 Function - dziedziczenie',
+  title: '3.12 Function - operator new',
+  content: `
+- funkcja wywołana z operatorem new staje się konstruktorem obiektu 
+
+function User(name) {
+  // this = {};  (implicitly)
+
+  // add properties to this
+  this.name = name;
+  this.isAdmin = false;
+
+  // return this;  (implicitly)
+}
+
+let user = new User('Bob');
+`
+},
+
+{
+  title: '3.13 Function - dziedziczenie',
   content: `
 function Animal(name) {
   this.name = name;
@@ -815,14 +858,13 @@ function Animal(name) {
 
 // Example method on the Animal object
 Animal.prototype.getName = function() {
-    return this.name;
+  return this.name;
 }
 
 function Mammal(name, hasHair) {
-    // Use the parent constructor and set the correct this
-    Animal.call(this, name);
-
-    this.hasHair = hasHair;
+  // Use the parent constructor and set the correct this
+  Animal.call(this, name);
+  this.hasHair = hasHair;
 }
 
 // Inherit the Animal prototype
@@ -832,15 +874,14 @@ Mammal.prototype = Object.create(Animal.prototype);
 Mammal.prototype.constructor = Mammal;
 
 Mammal.prototype.getHasHair = function() {
-    return this.hasHair;
+  return this.hasHair;
 }
 
 function Dog(name, breed) {
-    // Use the parent constructor and set the correct this
-    // Assume the dog has hair
-    Mammal.call(this, name, true);
-
-    this.breed = breed;
+  // Use the parent constructor and set the correct this
+  // Assume the dog has hair
+  Mammal.call(this, name, true);
+  this.breed = breed;
 }
 
 // Inherit the Mammal prototype
@@ -850,22 +891,135 @@ Dog.prototype = Object.create(Mammal.prototype);
 Dog.prototype.constructor = Dog;
 
 Dog.prototype.getBreed = function() {
-    return this.breed;
+  return this.breed;
 }
 
-var fido = new Dog('Fido', 'Lab');
+let fido = new Dog('Fido', 'Lab');
 
 fido.getName();  // 'Fido'
 fido.getHasHair(); // true
 fido.getBreed(); // 'Lab'
+
+fido instanceof Dog // true
+fido instanceof Mammal // true
+fido instanceof Animal // true
+fido instanceof Object // true
+`
+},
+
+{
+  title: '3.14 Array, Set, Map',
+  content: `
+- typy reprezentujące kolekcje (typy iterowalne)
+
+- Array (tablica, kolekcja dowolnych wartości, indeksowana)
+
+let a = []; // pusta tablica
+a = [1,2,5];
+a[0] // 1
+a[a.length - 1] // 5
+a.length // 3
+
+new Array(1,2) // 2 elementy
+new Array(100) // 0 elemtów, długość 100
+
+// dodwanie elementów
+a[10]=100;
+a.push(101);
+
+// iterowanie po elementach
+for (const element of a) {
+  console.log(element);
+}
+
+// iterowanie po indeksach i elementach
+for (const [index, element] of a.entries())
+  console.log(element);
+}
+
+// przydatne funkcje - Array.from, Array.of concat, push, pop, find, findIndex,
+// indexOf, includes, map, filter, reduce, fill, join, slice, sort, reverse
+
+
+- Set (zbiór elementów bez powtórzeń)
+let set = new Set();
+let john = { name: "John" };
+let pete = { name: "Pete" };
+let mary = { name: "Mary" };
+
+set.add(john);
+set.add(pete);
+set.add(mary);
+set.add(john);
+set.add(mary);
+
+set.size // 3
+
+
+- Map (podobne do obiektów ale kluczami dowolne typy, dla obiektów string i symbol)
+let map = new Map();
+map.set('1', 'str1');   // a string key
+map.set(1, 'num1');     // a numeric key
+map.set(true, 'bool1'); // a boolean key
+
+map.get(1); // 'num1'
+map.get('1'); // 'str1'
+map.size // 3
+`
+},
+
+{
+  title: '3.15 RegExp',
+  content: `
+- wyrażenia regularne
+
+- tworzymy poprzez konstruktor lub literał
+
+/pattern/flags
+new RegExp(pattern[, flags])
+RegExp(pattern[, flags])
+
+let r = new RegExp('[a-z]');
+r = /[a-z]/;
+r.test('abc') // true
+r.test('ABC') // false
+r.test('123') // false
+/[a-z]/i.test('ABC') // true
+
+- metody typu string korzystające z wyrażeń regularnych
+String.prototype.match()
+String.prototype.search()
+String.prototype.replace()
+
+'javascript'.replace(/[j,a,v]/g, function(x) { return x.toUpperCase(); }) // "JAVAscript"
+
+'John Smith'.replace(/(\w+)\s(\w+)/, '$2 $1'); // "Smith John"
+`
+},
+
+{
+  title: '3.16 Date',
+  content: `
+- obsługa dat w JS
+
+- data i czas przechowywany w UTC
+
+let date = new Date(1995, 11, 17);
+date.toISOString() // "1995-12-16T23:00:00.000Z"
+date.getTimezoneOffset() // -60
+
+new Date('1995-11-17 00:00:00').toISOString() // "1995-11-16T23:00:00.000Z"
+new Date('1995-11-17 00:00:00Z').toISOString() // "1995-11-17T00:00:00.000Z"
+
+https://exploringjs.com/impatient-js/ch_dates.html#date-libraries
 `
 },
 
 
 {
-  title: '3.??? Error',
+  title: '3.17 Error',
   content: `
-- tworzy obiekt błędu
+- obiekt błędu
 
 - możemy zbudować własne typy błędów
 
@@ -879,6 +1033,18 @@ try {
 `
 },
 
+{
+  title: '3.18 Ćwiczenie',
+  content: `
+  - funkcja getArrayStats
+
+  - funkcja zwraca obiekt, z wartościami min, max, sumą oraz liczbą dodatnich elementów w tablicy
+
+  - implementacja: impl-3.ts
+  
+  - testy: test-3.spec.ts
+`
+},
 
 ];
 }
@@ -892,7 +1058,7 @@ try {
 4. Składnia ES6, składnia zaawansowana
 - ES6 http://es6-features.org/#Constants
 
-- funkcje sztalkowe
+- funkcje strzalkowe
 - moduly
 - spread operator
 - klasy
