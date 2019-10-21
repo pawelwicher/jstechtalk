@@ -5,137 +5,6 @@ export class ContentService {
 
   public id = 0;
 
-  /*
-
-3. Typy wbudowane
-- function
-- object
-- array (przykladowe funkcje z array)
-- number
-- string
-
-- konwersje (i kontrowersje)
-
-
-4. Składnia ES6, składnia zaawansowana, idiomy
-- ES6 http://es6-features.org/#Constants
-
-- funkcje sztalkowe
-- moduly
-- spread operator
-- klasy
-- variadic args
-
-- porownywanie wartosci, Object.is (NaN, +0, -0), niejajwne konwersje przy ==
-
-5. Style programowania - JS jako język obiektowy i jako język funkcyjny
-- rambda, underscore
-
-6. TypeScript - co z tego mamy?
-7. Zadanie końcowe, pytania, dyskusja (do wyboru)
-
--------------------------
-triki
-
-var j = [...new Set([1, 2, 3, 3])]
->> [1, 2, 3]
-
-
-Ever need to filter falsy values (0, undefined, null, false, etc.) out of an array? You may not have known this trick:
-myArray
-    .map(item => {
-        // ...
-    })
-    // Get rid of bad values
-    .filter(Boolean);
-
-
-Converting to boolean using !! operator
-
-
-2) Converting to number using + operator
-This magic is awesome! And it’s very simple to be done, but it only works with string numbers, otherwise it will return NaN(Not a Number). Have a look on this example:
-
-function toNumber(strNumber) {
-    return +strNumber;
-}
-
-
-7) Getting the last item in the array
-The Array.prototype.slice(begin, end) has the power to cut arrays when you set the begin and end arguments. But if you don’t set the end argument, this function will automatically set the max value for the array. I think that few people know that this function can accept negative values, and if you set a negative number as begin argument you will get the last elements from the array:
-
-var array = [1, 2, 3, 4, 5, 6];
-console.log(array.slice(-1)); // [6]
-
-
-let array = Array(5).fill('');
-console.log(array); // outputs (5) ["", "", "", "", ""]
-
-
-8. String Interpolation
-
-
-Computed Property Names (ES6)
-var fruit_var = 'fruit'
-var eatables = {[fruit_var]: 'Apple', vegetable: 'Carrot'}
-
--------------------------
-
-function Animal(name) {
-   this.name = name;
-}
-
-// Example method on the Animal object
-Animal.prototype.getName = function() {
-    return this.name;
-}
-
-function Mammal(name, hasHair) {
-    // Use the parent constructor and set the correct `this`
-    Animal.call(this, name);
-
-    this.hasHair = hasHair;
-}
-
-// Inherit the Animal prototype
-Mammal.prototype = Object.create(Animal.prototype);
-
-// Set the Mammal constructor to 'Mammal'
-Mammal.prototype.constructor = Mammal;
-
-Mammal.prototype.getHasHair = function() {
-    return this.hasHair;
-}
-
-function Dog(name, breed) {
-    // Use the parent constructor and set the correct `this`
-    // Assume the dog has hair
-    Mammal.call(this, name, true);
-
-    this.breed = breed;
-}
-
-// Inherit the Mammal prototype
-Dog.prototype = Object.create(Mammal.prototype);
-
-// Set the Dog constructor to 'Dog'
-Dog.prototype.constructor = Dog;
-
-Dog.prototype.getBreed = function() {
-    return this.breed;
-}
-
-var fido = new Dog('Fido', 'Lab');
-
-fido.getName();  // 'Fido'
-fido.getHasHair(); // true
-fido.getBreed(); // 'Lab'
-
-
-
-
-*/
-
   public data = [
 {
 title: '1.1 Javascript',
@@ -580,6 +449,8 @@ false || true
 {
   title: '2.6.3 Operatory przypisania',
   content: `
+- podobnie jak w innych językach z rodziny C, przypisanie zwraca wartość (jest wyrażeniem)
+
 x = 1
 
 x += 1 (to samo dla -, /, *, % i operatorów bitowych itd.)
@@ -602,7 +473,7 @@ let { foo: x } = { o: 123, foo: 42 };
   content: `
 - wartości truthy i falsy
 
-- zwracają zawsze true ablo false (inaczej niż operatory logiczne)
+- zwracają zawsze true albo false (inaczej niż operatory logiczne)
 
 - falsy: undefined, null, 0, false, NaN, ''
 
@@ -688,6 +559,402 @@ if ('foo' in obj) {
 `
 },
 
+{
+  title: '3.1 Typy wbudowane',
+  content: `
+- typy proste (porównywane i przekazywane przez wartość)
+
+- obiekty (porównywane i przekazywane przez referencje)
+
+https://exploringjs.com/impatient-js/ch_values.html#whats-a-type
+`
+},
+
+{
+  title: '3.2 Typy proste',
+  content: `
+- undefined i null
+
+- number i bigint
+
+- string
+
+- boolean
+
+- symbol
+`
+},
+
+{
+  title: '3.3 undefined i null',
+  content: `
+- undefined, typ posiadający jedną wartość: undefined
+
+- null, typ posiadający jedną wartość: null
+
+- oba falsy
+`
+},
+
+{
+  title: '3.4 number',
+  content: `
+- reprezentuje liczby zmiennoprzecinkowe (doubles - 64 bity)
+
+- JS udostępnia obiekt Number, który jest nakładką
+  na typ liczbowy (analogicznie Boolean i String)
+
+- typ liczbowy tworzymy za pomocą funkcji Number lub literałów liczbowych
+
+let a = Number(1);
+
+// Binary (base 2)
+x = 0b11;
+
+// Octal (base 8)
+x = 0o10;
+
+// Decimal (base 10):
+x = 35;
+
+// Hexadecimal (base 16)
+x = 0xE7;
+
+x = 3e2; // 300
+
+x = 3e-2; // 0.3
+
+- wartości NaN i Infinity
+Math.sqrt(-1) //NaN
+1 / 0 // Infinity
+
+- przydatne funkcje: isNaN, toString(), parseInt, Number.isFinite, Number.isInteger, Number.prototype.toFixed
+
+let x = 255
+x.toString(16) // "ff"
+
+- inne funkcje liczbowe - globalny obiekt Math (Math.floor, Math.ceil, Math.round, Math.trunc)
+
+- BigInt https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
+`
+},
+
+{
+  title: '3.5 string',
+  content: `
+- typ reprezentujący łańcuch znaków (w JS nie ma typu char)
+
+let s = "Hello World";
+s = 'Hello World'
+s = 'Hello "World"'
+s = 'Hello \'World\''
+
+let longString = "This is a very long string which needs \\
+to wrap across multiple lines because \\
+otherwise my code is unreadable.";
+
+s = ${'`'}hello world${'`'};
+
+s = ${'`'}x = $\{1+1}${'`'}; // 'x = 2'
+
+- konkatenacja
+s = 'hello' + ' '
+s += 'world';
+
+- string jako łańcuch znaków
+s = 'hello'
+s.length; // 5
+s[0]; // 'h'
+
+- przydatne funkcje: toLowerCase, toUpperCase, trim, startsWith, endsWith,
+    match, slice, split, replace, indexOf, substring,
+    substr (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substr)
+
+- ciekawostka tagged template strings
+
+function tag(strings, ...values) {
+  for(const s of strings) {
+      console.log(s);
+  }
+  for(const v of values) {
+      console.log(v);
+  }
+}
+
+tag ${'`'}1 + 2 = $\{1+2}, 5 * 3 = $\{5*3}${'`'}
+1 + 2 = 
+, 5 * 3 = 
+ 
+3
+15
+`
+},
+
+{
+  title: '3.6 boolean',
+  content: `
+- wartości true i false
+
+- kownersja innych typów do boolean
+Boolean(1) // true
+!!1 // true
+!!0 // false
+!!null // false
+`
+},
+
+{
+  title: '3.7 symbol',
+  content: `
+- unikalne identyfikatory
+
+- symbole mogą być kluczami propert w obiekcie
+
+- symbole są przechowywane w global symbol registry
+
+let id = Symbol("id");
+let id = Symbol.for("id");
+
+- symbole systemowe
+Symbol.hasInstance
+Symbol.isConcatSpreadable
+Symbol.iterator
+Symbol.toPrimitive
+`
+},
+
+{
+  title: '3.8 Konwersje typów prostych',
+  content: `
+- wyczerpujący opis temtu znajdziemy w specyfikacji języka http://www.ecma-international.org/ecma-262/5.1/
+
+- operator + http://www.ecma-international.org/ecma-262/5.1/#sec-11.6.1
+2 + '2' // '22'
+2 - '2' // 0
+'1' + true // '1true'
+'1' - true // 0
+
+- równość nieścisła (loose equality)
+'1' == 1 // true
+[1,2,3] =='1,2,3' // true
+0 == false // true
+null == undefined // true
+
+- należy unikać niejawnych konwersji i stosować operator === (strict equality)
+if (x == 123) {
+  // x is either 123 or '123'
+}
+
+if (x === 123 || x === '123') ···
+if (Number(x) === 123) ···
+`
+},
+
+{
+  title: '3.9 Obiekty',
+  content: `
+- Object
+
+- Function
+
+- Array, Set, Map
+
+- RegExp
+
+- Date
+
+- Error
+`
+},
+
+{
+  title: '3.10 Object',
+  content: `
+- wszystkie obiekty w JS wywodzą się z typu Object
+
+- literał obiektu
+
+let obj = {}; // lub Object.create(null)
+obj = {
+  name: 'Bob',
+  age: 35,
+  sayHi() {
+    return 'Hi, i am ' + this.name;
+  }
+};
+
+obj.name = 'John'; // lub obj['name'] = 'John';
+
+obj.sayHi();
+
+- przydatne funkcje: Object.keys, Object.values, Object.entries, Object.is (inne porównywanie)
+`
+},
+
+{
+  title: '3.11 Function',
+  content: `
+- funkcje są najbardziej ekspresywnym elementem języka (oop, moduły, iife)
+
+- programowanie obiektowe w JS jest oparte o funkcje
+
+function Person(name) {
+  this.name = name;
+}
+
+let p = new Person('Bob');
+`
+},
+
+{
+  title: '3.12 Function - dziedziczenie',
+  content: `
+function Animal(name) {
+  this.name = name;
+}
+
+// Example method on the Animal object
+Animal.prototype.getName = function() {
+    return this.name;
+}
+
+function Mammal(name, hasHair) {
+    // Use the parent constructor and set the correct this
+    Animal.call(this, name);
+
+    this.hasHair = hasHair;
+}
+
+// Inherit the Animal prototype
+Mammal.prototype = Object.create(Animal.prototype);
+
+// Set the Mammal constructor to 'Mammal'
+Mammal.prototype.constructor = Mammal;
+
+Mammal.prototype.getHasHair = function() {
+    return this.hasHair;
+}
+
+function Dog(name, breed) {
+    // Use the parent constructor and set the correct this
+    // Assume the dog has hair
+    Mammal.call(this, name, true);
+
+    this.breed = breed;
+}
+
+// Inherit the Mammal prototype
+Dog.prototype = Object.create(Mammal.prototype);
+
+// Set the Dog constructor to 'Dog'
+Dog.prototype.constructor = Dog;
+
+Dog.prototype.getBreed = function() {
+    return this.breed;
+}
+
+var fido = new Dog('Fido', 'Lab');
+
+fido.getName();  // 'Fido'
+fido.getHasHair(); // true
+fido.getBreed(); // 'Lab'
+`
+},
+
+
+{
+  title: '3.??? Error',
+  content: `
+- tworzy obiekt błędu
+
+- możemy zbudować własne typy błędów
+
+- JS posiada wiele wbudowanych obiektów błędów, np. RangeError, ReferenceError, SyntaxError
+
+try {
+  throw new Error('Whoops!');
+} catch (e) {
+  console.error(e.name + ': ' + e.message);
+}
+`
+},
+
 
 ];
 }
+
+
+
+  /*
+
+
+
+4. Składnia ES6, składnia zaawansowana
+- ES6 http://es6-features.org/#Constants
+
+- funkcje sztalkowe
+- moduly
+- spread operator
+- klasy
+- variadic args
+
+
+5. Style programowania - JS jako język obiektowy i jako język funkcyjny
+- rambda, underscore
+
+6. TypeScript - co z tego mamy?
+7. Zadanie końcowe, pytania, dyskusja (do wyboru)
+
+-------------------------
+triki
+
+var j = [...new Set([1, 2, 3, 3])]
+>> [1, 2, 3]
+
+
+Ever need to filter falsy values (0, undefined, null, false, etc.) out of an array? You may not have known this trick:
+myArray
+    .map(item => {
+        // ...
+    })
+    // Get rid of bad values
+    .filter(Boolean);
+
+
+Converting to boolean using !! operator
+
+
+2) Converting to number using + operator
+This magic is awesome! And it’s very simple to be done, but it only works with string numbers, otherwise it will return NaN(Not a Number). Have a look on this example:
+
+function toNumber(strNumber) {
+    return +strNumber;
+}
+
+
+7) Getting the last item in the array
+The Array.prototype.slice(begin, end) has the power to cut arrays when you set the begin and end arguments. But if you don’t set the end argument, this function will automatically set the max value for the array. I think that few people know that this function can accept negative values, and if you set a negative number as begin argument you will get the last elements from the array:
+
+var array = [1, 2, 3, 4, 5, 6];
+console.log(array.slice(-1)); // [6]
+
+
+let array = Array(5).fill('');
+console.log(array); // outputs (5) ["", "", "", "", ""]
+
+
+8. String Interpolation
+
+
+Computed Property Names (ES6)
+var fruit_var = 'fruit'
+var eatables = {[fruit_var]: 'Apple', vegetable: 'Carrot'}
+
+-------------------------
+
+
+
+
+
+
+*/
