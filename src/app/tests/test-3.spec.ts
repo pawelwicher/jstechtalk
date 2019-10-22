@@ -11,7 +11,7 @@ describe('getArrayStats function tests', () => {
       sum: 0,
       positiveCount: 0
     };
-    expect(actual).toBe(expected);
+    expect(actual).toEqual(expected);
   });
 
   it('getArrayStats called with arg null should return an object with success flag set to false', () => {
@@ -23,7 +23,7 @@ describe('getArrayStats function tests', () => {
       sum: 0,
       positiveCount: 0
     };
-    expect(actual).toBe(expected);
+    expect(actual).toEqual(expected);
   });
 
   it('getArrayStats called with empty array should return an object with success flag set to false', () => {
@@ -35,7 +35,7 @@ describe('getArrayStats function tests', () => {
       sum: 0,
       positiveCount: 0
     };
-    expect(actual).toBe(expected);
+    expect(actual).toEqual(expected);
   });
 
   it('getArrayStats called with array that holds proper values should return an object with success flag set to true and correct stats', () => {
@@ -47,7 +47,7 @@ describe('getArrayStats function tests', () => {
       sum: 0,
       positiveCount: 0
     };
-    expect(actual).toBe(expected);
+    expect(actual).toEqual(expected);
   });
 
   it('getArrayStats called with array that holds not only numbers should filter out wrong values and return an object with success flag set to true', () => {
@@ -59,7 +59,7 @@ describe('getArrayStats function tests', () => {
       sum: 0,
       positiveCount: 0
     };
-    expect(actual).toBe(expected);
+    expect(actual).toEqual(expected);
   });
 
 });

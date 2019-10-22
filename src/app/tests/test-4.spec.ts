@@ -1,65 +1,29 @@
-import { getArrayStats } from '../impl/impl-3';
+import { getEmployees, Programmer, Employee, Tester } from '../impl/impl-4';
 
-describe('getArrayStats function tests', () => {
+describe('getEmployees function tests', () => {
 
-  it('getArrayStats called with arg undefined should return an object with success flag set to false', () => {
-    const actual = getArrayStats(undefined);
-    const expected = {
-      success: false,
-      min: 0,
-      max: 0,
-      sum: 0,
-      positiveCount: 0
-    };
-    expect(actual).toBe(expected);
+  it('getEmployees should return list with proper types', () => {
+    const data = ['Bob;P', 'Alice;T', 'John', 'Jane;P', 'Mary'];
+    const employees = getEmployees(data);
+    const employeesCount = employees.filter(x => x instanceof Employee).length;
+    const programmersCount = employees.filter(x => x instanceof Programmer).length;
+    const testersCount = employees.filter(x => x instanceof Tester).length;
+
+    expect(employeesCount).toEqual(5);
+    expect(programmersCount).toEqual(2);
+    expect(testersCount).toEqual(1);
   });
 
-  it('getArrayStats called with arg null should return an object with success flag set to false', () => {
-    const actual = getArrayStats(null);
-    const expected = {
-      success: false,
-      min: 0,
-      max: 0,
-      sum: 0,
-      positiveCount: 0
-    };
-    expect(actual).toBe(expected);
-  });
-
-  it('getArrayStats called with empty array should return an object with success flag set to false', () => {
-    const actual = getArrayStats([]);
-    const expected = {
-      success: false,
-      min: 0,
-      max: 0,
-      sum: 0,
-      positiveCount: 0
-    };
-    expect(actual).toBe(expected);
-  });
-
-  it('getArrayStats called with array that holds proper values should return an object with success flag set to true and correct stats', () => {
-    const actual = getArrayStats([1, -5, 4, 7, 5, 6, -2, -1, 2, 3, 7, 9, 1, 1, 4, 3]);
-    const expected = {
-      success: true,
-      min: 0,
-      max: 0,
-      sum: 0,
-      positiveCount: 0
-    };
-    expect(actual).toBe(expected);
-  });
-
-  it('getArrayStats called with array that holds not only numbers should filter out wrong values and return an object with success flag set to true', () => {
-    const actual = getArrayStats([1,2, null,3, 4, 7, 5,'4',5, {}, undefined, 6, -2,[], -1, 2, 3,[1,2], 7, 9, true, NaN]);
-    const expected = {
-      success: false,
-      min: 0,
-      max: 0,
-      sum: 0,
-      positiveCount: 0
-    };
-    expect(actual).toBe(expected);
+  it('getEmployees should return proper list of Employee objects', () => {
+    const data = ['Bob;P', 'Alice;T', 'John', 'Jane;P', 'Mary'];
+    const actual = getEmployees(data);
+    const e1 = new Programmer();
+    const e2 = new Tester();
+    const e3 = new Employee();
+    const e4 = new Programmer();
+    const e5 = new Employee();
+    const expected = [e1, e2, e3, e4, e5];
+    expect(actual).toEqual(expected);
   });
 
 });

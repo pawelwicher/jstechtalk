@@ -1296,11 +1296,12 @@ jane instanceof Person // true
 {
   title: '4.11 Ćwiczenie',
   content: `
-- funkcja getPersons
+- funkcja getEmployees
 
 - funkcja ma zwrócić listę pracowników na podstwie przekazanych surowych danych
 - należy zbudować prostą hierarchię klas
-- dane wejściowe: [{ name: 'Bob',  }]
+- dane wejściowe: ['Bob;P', 'Alice;T', 'John']
+- dwa typy: P - Programmer, T - Tester, lub brak (zwykły pracownik)
 
 - implementacja: impl-4.ts
 
