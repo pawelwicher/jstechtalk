@@ -928,6 +928,14 @@ new Array(100) // 0 elemtów, długość 100
 a[10]=100;
 a.push(101);
 
+// operacje na tablicach
+a = new Array(5) // [ , , , , ,]
+a.fill(42) // [42, 42, 42, 42, 42]
+
+[1,2,3].map(x => x + 1) // [2, 3, 4]
+[1,2,3].filter(x => x > 1) // [2, 3]
+[1,2,3].join(', ') // "1, 2, 3"
+
 // iterowanie po elementach
 for (const element of a) {
   console.log(element);
@@ -941,6 +949,8 @@ for (const [index, element] of a.entries())
 // przydatne funkcje - Array.from, Array.of concat, push, pop, find, findIndex,
 // indexOf, includes, map, filter, reduce, fill, join, slice, sort, reverse
 
+- TypedArray
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
 - Set (zbiór elementów bez powtórzeń)
 let set = new Set();
