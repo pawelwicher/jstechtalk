@@ -155,20 +155,20 @@ content: `
 {
   title: '2.3.1 deklaracje zmiennych',
   content: `
-var a = 1;
-let b = 2;
+var a = 1; // zasięg funkcji lub globalny
+let b = 2; // zasięg bloku
 const c = 3;
 var f = 123, g = 567;
 let p;
 let q;
 let [x,y] = [1,2];
 
-console.log(x);
-var x = 3; // zasięg funkcji lub globalny
+console.log(x); // x jest hoistowane i inicjowane wartością undefined
+var x = 3;
 // undefined
 
-console.log(x);
-let x = 3; // zasięg bloku
+console.log(x); // x jest hoistowane i znajduje sie w temporal dead zone
+let x = 3;
 // ReferenceError
 `
 },
@@ -552,15 +552,15 @@ if ('foo' in obj) {
 {
   title: '2.8 Ćwiczenie',
   content: `
-  - funkcja 'projectEulerNumberOne'
+- funkcja 'projectEulerNumberOne'
 
-  - funkcja ma zwrócic sumę wszystkich liczb poniżej 1000 podzielnych przez 3 lub 5
+- funkcja ma zwrócic sumę wszystkich liczb poniżej 1000 podzielnych przez 3 lub 5
 
-  - to samo co powyżej dla liczb poniżej 10000
+- to samo co powyżej dla liczb poniżej 10000
 
-  - implementacja: impl-2.ts
-  
-  - testy: test-2.spec.ts
+- implementacja: impl-2.ts
+
+- testy: test-2.spec.ts
 `
 },
 
@@ -660,9 +660,9 @@ let longString = "This is a very long string which needs \\
 to wrap across multiple lines because \\
 otherwise my code is unreadable.";
 
-s = ${'`'}hello world${'`'};
+s = \`hello world\`;
 
-s = ${'`'}x = $\{1+1}${'`'}; // 'x = 2'
+s = \`x = $\{1+1}\`; // 'x = 2'
 
 - konkatenacja
 s = 'hello' + ' '
@@ -688,7 +688,7 @@ function tag(strings, ...values) {
   }
 }
 
-tag ${'`'}1 + 2 = $\{1+2}, 5 * 3 = $\{5*3}${'`'}
+tag \`1 + 2 = $\{1+2}, 5 * 3 = $\{5*3}\`
 1 + 2 = 
 , 5 * 3 = 
  
@@ -928,6 +928,8 @@ new Array(100) // 0 elemtów, długość 100
 a[10]=100;
 a.push(101);
 
+[1,2,3].concat([44, 55]) // [1, 2, 3, 44, 55]
+
 // operacje na tablicach
 a = new Array(5) // [ , , , , ,]
 a.fill(42) // [42, 42, 42, 42, 42]
@@ -935,6 +937,18 @@ a.fill(42) // [42, 42, 42, 42, 42]
 [1,2,3].map(x => x + 1) // [2, 3, 4]
 [1,2,3].filter(x => x > 1) // [2, 3]
 [1,2,3].join(', ') // "1, 2, 3"
+[1,2,3].slice(-1); // [3]
+[1,2,3].indexOf(5) // -1
+
+typeof [1,2,3] // "object"
+Array.isArray([1,2,3]) // true
+Array.isArray({}) // false
+
+// holes
+a = [1, , 3]; // sparse array
+a.length // 3
+a.forEach(x => console.log(x)) // prints: 1 3
+https://exploringjs.com/impatient-js/ch_arrays.html#more-array-features-advanced
 
 // iterowanie po elementach
 for (const element of a) {
@@ -945,6 +959,8 @@ for (const element of a) {
 for (const [index, element] of a.entries())
   console.log(element);
 }
+
+[1,2,3].forEach(x => console.log(x));
 
 // przydatne funkcje - Array.from, Array.of concat, push, pop, find, findIndex,
 // indexOf, includes, map, filter, reduce, fill, join, slice, sort, reverse
@@ -1026,7 +1042,6 @@ https://exploringjs.com/impatient-js/ch_dates.html#date-libraries
 `
 },
 
-
 {
   title: '3.17 Error',
   content: `
@@ -1047,91 +1062,283 @@ try {
 {
   title: '3.18 Ćwiczenie',
   content: `
-  - funkcja getArrayStats
+- funkcja getArrayStats
 
-  - funkcja zwraca obiekt, z wartościami min, max, sumą oraz liczbą dodatnich elementów w tablicy
+- funkcja zwraca obiekt, z wartościami min, max, sumą oraz liczbą dodatnich elementów w tablicy
 
-  - implementacja: impl-3.ts
+- implementacja: impl-3.ts
+
+- testy: test-3.spec.ts
+`
+},
+
+{
+  title: '4.1 ES6, składnia zaawansowana',
+  content: `
+- niemodyfikowalne zmienne (const)
+
+- zasięg blokowy (let, const a takźe function)
+
+- funkcje strzałkowe
+
+- domyślne wartości parametów funkcji
+
+- zmienna ilość parametrów (rest parameters)
+
+- spread operator
+
+- stringi interpolowane
+
+- komputowane property obiektów
+
+- przypisania dekonstrukcyjne
+
+- moduły
+
+- klasy
+
+- symbole
+
+- iteratory, generatory, pętla for of
+
+- nowe typy danych: Map, Set, TyppedArray
+
+- nowe operacje dla istniejących typów
+
+- pełna lista ficzerów http://es6-features.org/#Constants
+`
+},
+
+{
+  title: '4.2 funkcje strzałkowe',
+  content: `
+let evens = [2, 4, 6];
+
+let odds = evens.map(v => v + 1);
+
+let pairs = evens.map(v => ({ even: v, odd: v + 1 }));
+
+let nums = evens.map((v, i) => v + i);
+
+nums.forEach(v => {
+  if (v % 5 === 0) {
+    console.log(v);
+  }
+})
+
+[ 1, 3, 4, 2 ].find(x => x > 3) // 4
+
+[ 1, 3, 4, 2 ].findIndex(x => x > 3) // 2
+`
+},
+
+{
+  title: '4.3 domyślne wartości parametów funkcji',
+  content: `
+function f(x, y = 7, z = 42) {
+  return x + y + z
+}
+f(1) // 50
+`
+},
+
+{
+  title: '4.4 zmienna ilość parametrów (rest parameters)',
+  content: `
+function f(x, y, ...a) {
+  return (x + y) * a.length
+}
+
+f(1, 2, "hello", true, 7) // 9
+f(1, 2, ...[1,2,3,4,5]) // 15
+`
+},
+
+{
+  title: '4.5 spread operator',
+  content: `
+// For function calls:
+// myFunction(...iterableObj);
+
+// For array literals or strings:
+// [...iterableObj, '4', 'five', 6];
+
+// For object literals (new in ECMAScript 2018):
+// let objClone = { ...obj };
+
+let params = ["hello", true, 7]
+let arr = [ 1, 2, ...params] // [1, 2, "hello", true, 7]
+
+let a = [1,2,3];
+a = [0, ...a]; // dodanie na poczatek tablicy
+a = [...a, 42]; // na koniec
+
+const DEFAULTS = { foo: 'a', bar: 'b' };
+const providedData = { foo: 1 };
+const allData = {...DEFAULTS, ...providedData}; // { foo: 1, bar: 'b' }
+`
+},
+
+{
+  title: '4.6 stringi interpolowane',
+  content: `
+let customer = { name: "Foo" }
+let card = { amount: 7, product: "Bar", unitprice: 42 }
+let message = \`Hello $\{customer.name},
+want to buy $\{card.amount} $\{card.product} for
+a total of $\{card.amount * card.unitprice} bucks?$\`
+`
+},
+
+{
+  title: '4.7 komputowane property obiektów',
+  content: `
+let obj = {
+  foo: "bar",
+  [ "b" + "a" + "r" ]: 42
+};
+`
+},
+
+{
+  title: '4.8 przypisania dekonstrukcyjne',
+  content: `
+// tablice
+
+let arr = ['Bob', 'Smith'];
+let [firstName, surname] = arr;
+
+['Bob', '123', 'Smith'];
+[firstName, , surname] = arr;
+
+let user = {};
+[user.name, user.surname] = 'Bob Smith'.split(' ');
+
+let [a, b, c] = "abc"; // ["a", "b", "c"]
+
+let [one, two, three] = new Set([1, 2, 3]);
+
+let arr = [1,2,3,4,5];
+let [head, ...tail] = arr;
+head // 1
+tail // [2, 3, 4, 5]
+
+let [x = 0, y = 0] = [1];
+
+
+// obiekty
+let options = {
+  title: 'Menu',
+  width: 100,
+  height: 200
+};
+let {title, width, height} = options;
+
+let {title, ...rest} = options;
+`
+},
+
+{
+  title: '4.9 moduły',
+  content: `
+// wcześniejsze rozwiązania
+// AMD – one of the most ancient module systems, initially implemented by the library require.js.
+// CommonJS – the module system created for Node.js server.
+
+
+// sayHi.js
+export function sayHi(user) {
+  alert(\`Hello, $\{user}!\`);
+}
+
+// main.js
+import {sayHi} from './sayHi.js';
+
+alert(sayHi); // function...
+sayHi('John'); // Hello, John!
+`
+},
+
+{
+  title: '4.10 klasy',
+  content: `
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+  describe() {
+    return \`Person named $\{this.name}\`;
+  }
+  static logNames(persons) {
+    for (const person of persons) {
+      console.log(person.name);
+    }
+  }
+}
+
+class Employee extends Person {
+  constructor(name, title) {
+    super(name);
+    this.title = title;
+  }
+  describe() {
+    return super.describe() +
+      \`($\{this.title})\`;
+  }
+}
   
-  - testy: test-3.spec.ts
+const jane = new Employee('Jane', 'CTO');
+jane instanceof Employee // true
+jane instanceof Person // true
+`
+},
+
+{
+  title: '4.11 Ćwiczenie',
+  content: `
+- funkcja getPersons
+
+- funkcja ma zwrócić listę pracowników na podstwie przekazanych surowych danych
+- należy zbudować prostą hierarchię klas
+- dane wejściowe: [{ name: 'Bob',  }]
+
+- implementacja: impl-4.ts
+
+- testy: test-4.spec.ts
+`
+},
+
+{
+  title: '5.1 Style programowania',
+  content: `
+- JS jako język imperatywny
+
+- JS jako język obiektowy
+
+- JS jako język funkcyjny
+`
+},
+
+{
+  title: '5.2 Javascript a TypeScript',
+  content: `
+- Javascript a TypeScript (raz jeszcze)
+
+http://www.typescriptlang.org/docs/handbook/advanced-types.html
+http://www.typescriptlang.org/play/index.html
+`
+},
+
+{
+  title: '5.3 Podsumowanie, dyskusja, pytania, czyli koniec',
+  content: `
+
+
+
+
+                                                console.log('Dziękuję za uwagę');
 `
 },
 
 ];
 }
-
-
-
-  /*
-
-
-
-4. Składnia ES6, składnia zaawansowana
-- ES6 http://es6-features.org/#Constants
-
-- funkcje strzalkowe
-- moduly
-- spread operator
-- klasy
-- variadic args
-
-
-5. Style programowania - JS jako język obiektowy i jako język funkcyjny
-- rambda, underscore
-
-6. TypeScript - co z tego mamy?
-7. Zadanie końcowe, pytania, dyskusja (do wyboru)
-
--------------------------
-triki
-
-var j = [...new Set([1, 2, 3, 3])]
->> [1, 2, 3]
-
-
-Ever need to filter falsy values (0, undefined, null, false, etc.) out of an array? You may not have known this trick:
-myArray
-    .map(item => {
-        // ...
-    })
-    // Get rid of bad values
-    .filter(Boolean);
-
-
-Converting to boolean using !! operator
-
-
-2) Converting to number using + operator
-This magic is awesome! And it’s very simple to be done, but it only works with string numbers, otherwise it will return NaN(Not a Number). Have a look on this example:
-
-function toNumber(strNumber) {
-    return +strNumber;
-}
-
-
-7) Getting the last item in the array
-The Array.prototype.slice(begin, end) has the power to cut arrays when you set the begin and end arguments. But if you don’t set the end argument, this function will automatically set the max value for the array. I think that few people know that this function can accept negative values, and if you set a negative number as begin argument you will get the last elements from the array:
-
-var array = [1, 2, 3, 4, 5, 6];
-console.log(array.slice(-1)); // [6]
-
-
-let array = Array(5).fill('');
-console.log(array); // outputs (5) ["", "", "", "", ""]
-
-
-8. String Interpolation
-
-
-Computed Property Names (ES6)
-var fruit_var = 'fruit'
-var eatables = {[fruit_var]: 'Apple', vegetable: 'Carrot'}
-
--------------------------
-
-
-
-
-
-
-*/
