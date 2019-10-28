@@ -1,3 +1,3 @@
-export function greet(x = null) {
-  return null;
+export function greet(name = 'World') {
+  return `Hello ${name}`;
 }

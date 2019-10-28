@@ -1,6 +1,6 @@
 import { getEmployees, Programmer, Employee, Tester } from '../impl/impl-4';
 
-describe('getEmployees function tests', () => {
+xdescribe('getEmployees function tests', () => {
 
   it('getEmployees should return list with proper types', () => {
     const data = ['Bob;P', 'Alice;T', 'John', 'Jane;P', 'Mary'];
