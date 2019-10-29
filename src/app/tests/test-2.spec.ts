@@ -1,6 +1,6 @@
 import { projectEulerNumberOne } from '../impl/impl-2';
 
-xdescribe('projectEulerNumberOne function tests', () => {
+describe('projectEulerNumberOne function tests', () => {
 
   it('projectEulerNumberOne called with arg 1000 should return a number greather than 0', () => {
     const actual = projectEulerNumberOne(1000);
@@ -13,9 +13,9 @@ xdescribe('projectEulerNumberOne function tests', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('projectEulerNumberOne callef with arg 10000 should return 5555', () => {
+  it('projectEulerNumberOne callef with arg 10000 should return 23331668', () => {
     const actual = projectEulerNumberOne(10000);
-    const expected = 5555;
+    const expected = 23331668;
     expect(actual).toEqual(expected);
   });
 

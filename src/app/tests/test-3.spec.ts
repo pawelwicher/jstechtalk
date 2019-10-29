@@ -1,6 +1,6 @@
 import { getArrayStats } from '../impl/impl-3';
 
-xdescribe('getArrayStats function tests', () => {
+describe('getArrayStats function tests', () => {
 
   it('getArrayStats called with arg undefined should return an object with success flag set to false', () => {
     const actual = getArrayStats(undefined);
@@ -42,22 +42,22 @@ xdescribe('getArrayStats function tests', () => {
     const actual = getArrayStats([1, -5, 4, 7, 5, 6, -2, -1, 2, 3, 7, 9, 1, 1, 4, 3]);
     const expected = {
       success: true,
-      min: 0,
-      max: 0,
-      sum: 0,
-      positiveCount: 0
+      min: -5,
+      max: 9,
+      sum: 45,
+      positiveCount: 13
     };
     expect(actual).toEqual(expected);
   });
 
   it('getArrayStats called with array that holds not only numbers should filter out wrong values and return an object with success flag set to true', () => {
-    const actual = getArrayStats([1,2, null,3, 4, 7, 5,'4',5, {}, undefined, 6, -2,[], -1, 2, 3,[1,2], 7, 9, true, NaN]);
+    const actual = getArrayStats([1, 2, null, 3, 4, 7, 5,'4',5, {}, undefined, 6, -2, [], -1, 2, 3, [1,2], 7, 9, true, NaN]);
     const expected = {
-      success: false,
-      min: 0,
-      max: 0,
-      sum: 0,
-      positiveCount: 0
+      success: true,
+      min: -2,
+      max: 9,
+      sum: 51,
+      positiveCount: 12
     };
     expect(actual).toEqual(expected);
   });
