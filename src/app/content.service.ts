@@ -788,7 +788,9 @@ if (Number(x) === 123) ···
 
 - literał obiektu
 
-let obj = {}; // lub Object.create(null)
+let obj = {}; 
+// Object.create
+
 let id = 123;
 obj = {
   id, // shorthand
@@ -809,6 +811,26 @@ obj = {
 obj.name = 'John'; // lub obj['name'] = 'John';
 
 obj.sayHi();
+
+- operacje na obiektach
+let obj1 = {};
+Object.defineProperty(obj1, 'foo1', { enumerable: true, value: 42 });
+Object.defineProperty(obj1, 'bar1', { enumerable: false, value: 123 });
+
+let obj2 = Object.create(obj1)
+Object.getPrototypeOf(obj2) === obj1 // true
+Object.defineProperty(obj2, 'foo2', { enumerable: true, value: 42 });
+Object.defineProperty(obj2, 'bar2', { enumerable: false, value: 123 });
+
+for(const prop in obj2) console.log(prop); // foo2, foo1
+
+Object.keys(obj2) // ["foo2"]
+
+Object.getOwnPropertyNames(obj2) // ["foo2", "bar2"]
+
+'bar1' in obj2 // true
+
+obj2.hasOwnProperty('bar2') // true
 
 - przydatne funkcje: Object.keys, Object.values, Object.entries, Object.is (inne porównywanie)
 `
