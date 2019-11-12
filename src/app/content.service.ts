@@ -689,11 +689,17 @@ function tag(strings, ...values) {
 }
 
 tag \`1 + 2 = $\{1+2}, 5 * 3 = $\{5*3}\`
-1 + 2 = 
-, 5 * 3 = 
- 
+1 + 2 =
+, 5 * 3 =
+
 3
 15
+
+// unicode - nowe metody: String.fromCodePoint, String.prototype.codePointAt()
+// wczesniejsze: String.fromCharCode(), String.prototype.charCodeAt()
+
+// nowy zapis specjalny punktów kodowych
+'\\u\{1F4A3\}' // prosze sobie wkleic w konsoli
 `
 },
 
@@ -788,7 +794,7 @@ if (Number(x) === 123) ···
 
 - literał obiektu
 
-let obj = {}; 
+let obj = {};
 // Object.create
 
 let id = 123;
@@ -856,7 +862,7 @@ let p = new Person('Bob');
 {
   title: '3.12 Function - operator new',
   content: `
-- funkcja wywołana z operatorem new staje się konstruktorem obiektu 
+- funkcja wywołana z operatorem new staje się konstruktorem obiektu
 
 function User(name) {
   // this = {};  (implicitly)
@@ -1195,6 +1201,8 @@ let a = [1,2,3];
 a = [0, ...a]; // dodanie na poczatek tablicy
 a = [...a, 42]; // na koniec
 
+let [head, ...tail] = [1,2,3,4]
+
 const DEFAULTS = { foo: 'a', bar: 'b' };
 const providedData = { foo: 1 };
 const allData = {...DEFAULTS, ...providedData}; // { foo: 1, bar: 'b' }
@@ -1308,7 +1316,7 @@ class Employee extends Person {
       \`($\{this.title})\`;
   }
 }
-  
+
 const jane = new Employee('Jane', 'CTO');
 jane instanceof Employee // true
 jane instanceof Person // true
