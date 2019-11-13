@@ -1368,7 +1368,16 @@ http://www.typescriptlang.org/play/index.html
 },
 
 {
-  title: '5.3 Podsumowanie, dyskusja, pytania, czyli koniec',
+  title: '5.3 WebAssemby',
+  content: `
+- uruchamianie kodu wasm w przeglądarce
+
+- wydajność bliska C / C++ (https://developer.mozilla.org/en-US/docs/WebAssembly)
+`
+},
+
+{
+  title: '5.4 Podsumowanie, dyskusja, pytania, czyli koniec',
   content: `
 
 
