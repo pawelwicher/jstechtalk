@@ -700,6 +700,11 @@ tag \`1 + 2 = $\{1+2}, 5 * 3 = $\{5*3}\`
 
 // nowy zapis specjalny punktów kodowych
 '\\u\{1F4A3\}' // prosze sobie wkleic w konsoli
+
+let s = 'foo';
+s.toUpperCase(); // opakowywanie w String
+s + ""; // rozpakowanie niejawne
+s.valueOf(); // rozpakowanie jawne
 `
 },
 
@@ -774,6 +779,8 @@ if (Number(x) === 123) ···
   title: '3.9 Obiekty',
   content: `
 - Object
+
+- Obiekty macierzyste / opakowywujące (https://exploringjs.com/impatient-js/ch_values.html#whats-a-type)
 
 - Function
 
