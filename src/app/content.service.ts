@@ -1362,10 +1362,7 @@ jane instanceof Person // true
 {
   title: '5.2 Javascript a TypeScript',
   content: `
-- Javascript a TypeScript (raz jeszcze)
-
-http://www.typescriptlang.org/docs/handbook/advanced-types.html
-http://www.typescriptlang.org/play/index.html
+http://www.typescriptlang.org/docs/handbook/basic-types.html
 `
 },
 
