@@ -1403,7 +1403,7 @@ JSON.stringify(obj); // "{"somethingDifferent":42}"
 },
 
 {
-  title: '5.4 WebAssemby',
+  title: '5.4 WebAssembly',
   content: `
 - uruchamianie kodu wasm w przeglądarce
 
@@ -1412,9 +1412,10 @@ JSON.stringify(obj); // "{"somethingDifferent":42}"
 },
 
 {
-  title: '5.4 Podsumowanie, dyskusja, pytania, czyli koniec',
+  title: '5.5 Podsumowanie, dyskusja, pytania, czyli koniec',
   content: `
 console.log('Dziękuję za uwagę');
+console.log(parseInt(1 / 0, 19))
 `
 },
 
