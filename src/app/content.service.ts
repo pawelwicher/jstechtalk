@@ -1368,7 +1368,40 @@ http://www.typescriptlang.org/play/index.html
 },
 
 {
-  title: '5.3 WebAssemby',
+  title: '5.3 JSON',
+  content: `
+let obj = JSON.parse('{ "foo": 1 }');
+
+obj = { foo: 1, bar: [1,2,4] };
+JSON.stringify(obj); // "{"foo":1,"bar":[1,2,4]}"
+
+JSON.stringify(obj, ['bar']);  // "{"bar":[1,2,4]}"
+
+JSON.stringify(obj, ['bar'], 2);
+/*
+"{
+  "bar": [
+    1,
+    2,
+    4
+  ]
+}"
+*/
+
+obj = { foo:1, bar:2, qwerty: 1 };
+JSON.stringify(obj, function(k, v) { if (k !== 'qwerty') return v; }); // "{"foo":1,"bar":2}"
+
+obj = { foo: 1 };
+obj.f = obj;
+JSON.stringify(obj);  // Uncaught TypeError: Converting circular structure to JSON
+
+obj = {a:1, b:2, c:3, toJSON() { return { somethingDifferent: 42 } } };
+JSON.stringify(obj); // "{"somethingDifferent":42}"
+`
+},
+
+{
+  title: '5.4 WebAssemby',
   content: `
 - uruchamianie kodu wasm w przeglądarce
 
@@ -1379,11 +1412,7 @@ http://www.typescriptlang.org/play/index.html
 {
   title: '5.4 Podsumowanie, dyskusja, pytania, czyli koniec',
   content: `
-
-
-
-
-                                                console.log('Dziękuję za uwagę');
+console.log('Dziękuję za uwagę');
 `
 },
 

@@ -5,7 +5,6 @@ xdescribe('getEmployees function tests', () => {
   it('getEmployees should return list with proper types', () => {
     const data = ['Bob;P', 'Alice;P', 'John', 'Jane;P', 'Mary'];
     const employees = getEmployees(data);
-    debugger;
     const employeesCount = employees.filter(x => x instanceof Employee).length;
     const programmersCount = employees.filter(x => x instanceof Programmer).length;
 
