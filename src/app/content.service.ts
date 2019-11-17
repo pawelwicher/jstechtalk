@@ -1339,8 +1339,8 @@ jane instanceof Person // true
 
 - funkcja ma zwrócić listę pracowników na podstwie przekazanych surowych danych
 - należy zbudować prostą hierarchię klas
-- dane wejściowe: ['Bob;P', 'Alice;T', 'John']
-- dwa typy: P - Programmer, T - Tester, lub brak (zwykły pracownik)
+- dane wejściowe: ['Bob;P', 'Alice;P', 'John']
+- dwa typy: P - Programmer, brak (zwykły pracownik)
 
 - implementacja: impl-4.ts
 
