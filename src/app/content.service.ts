@@ -888,6 +888,8 @@ let user = new User('Bob');
 {
   title: '3.13 Function - dziedziczenie',
   content: `
+// https://tylermcginnis.com/beginners-guide-to-javascript-prototype/
+
 function Animal(name) {
   this.name = name;
 }
