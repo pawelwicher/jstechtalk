@@ -1,3 +1,20 @@
 export function getArrayStats(arr) {
-  return null;
+  const result = {
+    success: false,
+    min: 0,
+    max: 0,
+    sum: 0,
+    positiveCount: 0
+  };
+
+  if (arr && arr.length > 0) {
+    arr = arr.filter(x => !!x && typeof x === 'number' || x === 0);
+    result.success = true;
+    result.min = Math.min(...arr);
+    result.max = Math.max(...arr);
+    result.sum = arr.reduce((p, c) => p + c);
+    result.positiveCount = arr.filter(x => x > 0).length;
+  }
+
+  return result;
 }

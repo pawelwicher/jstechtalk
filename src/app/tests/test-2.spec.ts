@@ -1,6 +1,6 @@
 import { projectEulerNumberOne } from '../impl/impl-2';
 
-xdescribe('projectEulerNumberOne function tests', () => {
+describe('projectEulerNumberOne function tests', () => {
 
   it('projectEulerNumberOne called with arg 1000 should return a number greather than 0', () => {
     const actual = projectEulerNumberOne(1000);

@@ -1,6 +1,6 @@
 import { getArrayStats } from '../impl/impl-3';
 
-xdescribe('getArrayStats function tests', () => {
+describe('getArrayStats function tests', () => {
 
   it('getArrayStats called with arg undefined should return an object with success flag set to false', () => {
     const actual = getArrayStats(undefined);
@@ -34,6 +34,18 @@ xdescribe('getArrayStats function tests', () => {
       max: 0,
       sum: 0,
       positiveCount: 0
+    };
+    expect(actual).toEqual(expected);
+  });
+
+  it('getArrayStats called with array that holds proper positive values and zero should return an object with success flag set to true and correct stats', () => {
+    const actual = getArrayStats([0, 2, 1]);
+    const expected = {
+      success: true,
+      min: 0,
+      max: 2,
+      sum: 3,
+      positiveCount: 2
     };
     expect(actual).toEqual(expected);
   });
